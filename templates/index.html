@@ -34,10 +34,10 @@
             })
             .then(response => response.json())
             .then(data => {
-                const aiResponse = data.response;
+                const lifecoachResponse = data.response;
                 
-                // Display AI response
-                chatHistory.innerHTML += `<div class="ai-message">AI: ${aiResponse}</div>`;
+                // Display lifecoach response
+                chatHistory.innerHTML += `<div class="lifecoach-message">Life Coach: ${lifecoachResponse}</div>`;
                 
                 // Clear input box
                 inputBox.value = '';
@@ -61,8 +61,8 @@
             color: blue;
         }
         
-        .ai-message {
-            color: green;
+        .lifecoach-message {
+            color: purple;
         }
     </style>
 </body>
