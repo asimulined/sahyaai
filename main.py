@@ -18,8 +18,8 @@ class LifecoachModel(nn.Module):
         output = self.fc(output)
         return output
 
-# Function to create and save the lifecoach model
-def create_and_save_lifecoach_model():
+# Function to train and save the lifecoach model
+def train_and_save_lifecoach_model():
     input_vocab_size = 10000  # Replace with the actual size of your input vocabulary
     output_vocab_size = 10000  # Replace with the actual size of your output vocabulary
     embedding_size = 256
@@ -28,7 +28,10 @@ def create_and_save_lifecoach_model():
 
     lifecoach_model = LifecoachModel(input_vocab_size, output_vocab_size, embedding_size, hidden_size, num_layers)
 
-    # Save the model checkpoint to a new file
+    # Train the model
+    # ... (Add your training code here)
+
+    # Save the model checkpoint, overwriting the existing file
     torch.save(lifecoach_model.state_dict(), "lifecoach_model.pth")
 
 # Load the pre-trained lifecoach model
@@ -75,5 +78,5 @@ def generate_lifecoach_response(input_text):
     return lifecoach_response
 
 if __name__ == '__main__':
-    create_and_save_lifecoach_model()  # Create and save the model
+    train_and_save_lifecoach_model()  # Train and save the model
     app.run(debug=True, host="0.0.0.0", port=8080)
