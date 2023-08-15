@@ -22,7 +22,7 @@ def chat():
         max_tokens=50  # Set the desired response length
     )
     
-    ai_response = response
+    ai_response = response.choices[0].text.strip()
     
     return jsonify({'ai_response': ai_response})
 
