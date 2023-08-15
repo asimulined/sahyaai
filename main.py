@@ -4,7 +4,7 @@ import torch.nn as nn
 
 app = Flask(__name__)
 
-# Define your lifecoach model architecture
+# Define your lifecoach model architecture (simplified example)
 class LifecoachModel(nn.Module):
     def __init__(self, input_vocab_size, output_vocab_size, embedding_size, hidden_size, num_layers):
         super(LifecoachModel, self).__init__()
@@ -18,16 +18,34 @@ class LifecoachModel(nn.Module):
         output = self.fc(output)
         return output
 
-# Load your pre-trained lifecoach model
-input_vocab_size = 10000  # Replace with the actual size of your input vocabulary
-output_vocab_size = 10000  # Replace with the actual size of your output vocabulary
-embedding_size = 256
-hidden_size = 512
-num_layers = 2
+# Function to create and save the lifecoach model
+def create_and_save_lifecoach_model():
+    input_vocab_size = 10000  # Replace with the actual size of your input vocabulary
+    output_vocab_size = 10000  # Replace with the actual size of your output vocabulary
+    embedding_size = 256
+    hidden_size = 512
+    num_layers = 2
 
-lifecoach_model = LifecoachModel(input_vocab_size, output_vocab_size, embedding_size, hidden_size, num_layers)
-lifecoach_model.load_state_dict(torch.load("lifecoach_model.pth"))
-lifecoach_model.eval()
+    lifecoach_model = LifecoachModel(input_vocab_size, output_vocab_size, embedding_size, hidden_size, num_layers)
+
+    # Save the model checkpoint to a new file
+    torch.save(lifecoach_model.state_dict(), "lifecoach_model.pth")
+
+# Load the pre-trained lifecoach model
+def load_lifecoach_model():
+    input_vocab_size = 10000  # Replace with the actual size of your input vocabulary
+    output_vocab_size = 10000  # Replace with the actual size of your output vocabulary
+    embedding_size = 256
+    hidden_size = 512
+    num_layers = 2
+
+    lifecoach_model = LifecoachModel(input_vocab_size, output_vocab_size, embedding_size, hidden_size, num_layers)
+    lifecoach_model.load_state_dict(torch.load("lifecoach_model.pth", map_location=torch.device('cpu')))
+    lifecoach_model.eval()
+    return lifecoach_model
+
+# Load the pre-trained lifecoach model
+lifecoach_model = load_lifecoach_model()
 
 @app.route('/')
 def home():
@@ -57,4 +75,5 @@ def generate_lifecoach_response(input_text):
     return lifecoach_response
 
 if __name__ == '__main__':
+    create_and_save_lifecoach_model()  # Create and save the model
     app.run(debug=True, host="0.0.0.0", port=8080)
