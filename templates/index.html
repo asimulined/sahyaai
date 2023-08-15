@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chatbot Example</title>
+    <title>AI Life Coach | By SahyaAI</title>
 </head>
 <body>
-    <h1>Chatbot Example</h1>
+    <h1>AI Life Coach | By SahyaAI</h1>
     <div id="chat-container">
         <div id="chat-history"></div>
         <div id="user-input">
@@ -22,7 +22,7 @@
             const userMessage = inputBox.value;
             
             // Display user message
-            chatHistory.innerHTML += `<div>User: ${userMessage}</div>`;
+            chatHistory.innerHTML += `<div class="user-message">You: ${userMessage}</div>`;
             
             // Send user message to server
             fetch('/chat', {
@@ -34,15 +34,36 @@
             })
             .then(response => response.json())
             .then(data => {
-                const aiResponse = data.ai_response;
+                const aiResponse = data.response;
                 
                 // Display AI response
-                chatHistory.innerHTML += `<div>AI: ${aiResponse}</div>`;
+                chatHistory.innerHTML += `<div class="ai-message">AI: ${aiResponse}</div>`;
                 
                 // Clear input box
                 inputBox.value = '';
             });
         });
     </script>
+    
+    <style>
+        #chat-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        #chat-history {
+            margin-bottom: 10px;
+        }
+        
+        .user-message {
+            color: blue;
+        }
+        
+        .ai-message {
+            color: green;
+        }
+    </style>
 </body>
 </html>
