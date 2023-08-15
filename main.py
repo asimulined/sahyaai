@@ -1,12 +1,24 @@
-import openai
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, render_template, request, jsonify
+import torch
+import torch.nn as nn
 
 app = Flask(__name__)
 
-# Set your OpenAI API key
-openai.api_key = "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"
+# Define your chatbot model architecture (simplified example)
+class ChatbotModel(nn.Module):
+    def __init__(self):
+        super(ChatbotModel, self).__init__()
+        # Define your model layers here
 
-# Define routes
+    def forward(self, input_text):
+        # Implement the model's forward pass to generate a response
+        return generated_response
+
+# Load your pre-trained chatbot model
+model = ChatbotModel()
+model.load_state_dict(torch.load("chatbot_model.pth"))
+model.eval()
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -15,16 +27,18 @@ def home():
 def chat():
     user_input = request.form['user_input']
     
-    # Generate AI response using GPT-3
-    response = openai.Completion.create(
-        engine="davinci",
-        prompt=user_input,
-        max_tokens=50  # Set the desired response length
-    )
+    # Process user input and generate chatbot response using the model
+    generated_response = generate_response(user_input)
     
-    ai_response = response.choices[0].text.strip()
+    return jsonify({'response': generated_response})
+
+def generate_response(input_text):
+    # Convert input text to a format suitable for your model
+    # Use your model to generate a response based on the input
     
-    return jsonify({'ai_response': ai_response})
+    # For this example, a simple echo bot behavior is shown
+    response = "You said: " + input_text
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=8080)
